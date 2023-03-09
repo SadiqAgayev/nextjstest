@@ -5,7 +5,7 @@ import styles from '@/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Home( {users} ) {
   return (
     <>
       <Head>
@@ -118,6 +118,26 @@ export default function Home() {
           </a>
         </div>
       </main> */}
+      {console.log(users)}
+
+      {
+        users.map(user => {
+          return (
+            <h2 style={{color:"red"}}>{user.id} - {user.name}</h2>
+          )
+        })
+      }
     </>
   )
+}
+
+
+export const getStaticProps = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/users')
+  const users = await res.json()
+  return { 
+    props: {
+      users
+    }
+  }
 }
